@@ -3,6 +3,7 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const autoprefixer = require('autoprefixer');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const ip = process.env.IP || '0.0.0.0'
 const port = process.env.PORT || 3000
@@ -46,7 +47,19 @@ const config = {
       filename: 'index.html',
       template: path.join(__dirname, '/public/index.html')
     }),
-    new ExtractTextPlugin("app.css")
+    new ExtractTextPlugin("app.css"),
+    new CopyWebpackPlugin([
+        {
+          context:  path.join(__dirname, '/public/'),
+          from: 'api/albums.json',
+          to: 'api/albums.json',
+        },
+        {
+          context: path.join(__dirname, '/public/'),
+          from: 'api/albums/',
+          to: 'api/albums/',
+        }
+    ])
   ],
   module: {
     loaders: [

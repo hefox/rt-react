@@ -1,8 +1,13 @@
 import React from 'react'
+import { PageTemplate } from 'components'
+import GalleriesContainer from 'containers/Galleries'
 
 const GalleriesPage = () => {
   return (
-    <div>Gallery Page</div>
+    <PageTemplate>
+      <h1>Gallery Page</h1>
+      <GalleriesContainer />
+    </PageTemplate>
   )
 }
 
