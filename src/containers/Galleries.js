@@ -28,7 +28,7 @@ class GalleriesContainer extends React.Component {
   }
 
   render() {
-    return (<GalleryList galleries={this.state.galleries} />);
+    return (<GalleryList galleries={this.state.galleries} query={this.props.query} />);
   }
 }
 

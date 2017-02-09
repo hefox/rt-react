@@ -5,3 +5,16 @@ body {
   font: 100% $font-stack;
   color: $primary-color;
 }
+
+@media all and (min-width: 600px) {
+  .gallery-list__form {
+    display: flex;
+  }
+  .gallery-list__form-item {
+    margin: 10px;
+    flex-grow: 1;
+  }
+  .gallery-list__form-item--search {
+    flex-grow: 2;
+  }
+}
