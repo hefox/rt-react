@@ -19,7 +19,7 @@ class GalleriesContainer extends React.Component {
           albums.push({
             name: response.data[i].name,
             date: new Date(response.data[i].date),
-            stub: response.data[i].stub.replace('/','--')
+            stub: response.data[i].stub.replace(/\//g,'--')
           })
         }
       }

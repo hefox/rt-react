@@ -71,8 +71,14 @@ const config = {
       { test: /\.eot$/, loader: 'file?prefix=fonts/' },
       { test: /\.json$/, loader: 'json' },
       {
+        include: path.join(__dirname, '/node_modules/react-toolbox/'),
         test: /\.css$/,
         loader: ExtractTextPlugin.extract('style', 'css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss')
+      },
+      {
+        exclude: path.join(__dirname, '/node_modules/react-toolbox/'),
+        test: /(\.css)$/,
+        loader: ExtractTextPlugin.extract('style','css')
       },
       {
         test: /(\.scss)$/,

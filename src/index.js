@@ -7,6 +7,7 @@ import routes from 'routes'
 
 const root = document.getElementById('app')
 
+import "react-image-gallery/styles/css/image-gallery.css";
 require('./styles/app.scss');
 
 const renderApp = () => (
