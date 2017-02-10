@@ -17,7 +17,7 @@ class GalleryDetail extends React.Component {
 		this.openLightbox = this.openLightbox.bind(this);
 		var image = props.gallery && props.gallery.images && props.gallery.images.length && props.query.image ? parseInt(props.query.image) : 0;
 		this.state = {
-      switch_view: false,
+      switch_view: props.query.switch_view ? true : false,
       lightboxIsOpen: image ? true : false,
   		currentImage: image,
     };
@@ -35,6 +35,7 @@ class GalleryDetail extends React.Component {
   }
 
   handleChange = (field, value) => {
+		addQuery({[field]: value});
     this.setState({...this.state, [field]: value});
   };
 
