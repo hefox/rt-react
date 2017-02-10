@@ -2,6 +2,7 @@ import React from 'react';
 import ImageGallery from 'react-image-gallery';
 import Lightbox from 'react-images';
 import Switch from 'react-toolbox/lib/switch';
+import { addQuery, removeQuery } from 'utils/query';
 
 class GalleryDetail extends React.Component {
   constructor (props) {
@@ -14,42 +15,60 @@ class GalleryDetail extends React.Component {
 		this.gotoImage = this.gotoImage.bind(this);
 		this.handleClickImage = this.handleClickImage.bind(this);
 		this.openLightbox = this.openLightbox.bind(this);
+		var image = props.gallery && props.gallery.images && props.gallery.images.length && props.query.image ? parseInt(props.query.image) : 0;
+		this.state = {
+      switch_view: false,
+      lightboxIsOpen: image ? true : false,
+  		currentImage: image,
+    };
 	}
-  state = {
-    switch_view: false,
-    lightboxIsOpen: false,
-		currentImage: 0,
-  };
+
+  componentWillReceiveProps = (nextProps) => {
+    // Load new data when the dataSource property changes.
+    if ((!this.props.gallery  || !this.props.gallery.images || !this.props.gallery.images.length)
+      && nextProps.gallery && nextProps.gallery.images.length && nextProps.query.image)  {
+  		this.setState({
+  			currentImage: parseInt(nextProps.query.image),
+  			lightboxIsOpen: true,
+  		});
+    }
+  }
 
   handleChange = (field, value) => {
     this.setState({...this.state, [field]: value});
   };
 
-
 	openLightbox (index, event) {
 		event.preventDefault();
+		addQuery({'image': index});
 		this.setState({
 			currentImage: index,
 			lightboxIsOpen: true,
 		});
 	}
 	closeLightbox () {
+		removeQuery('image');
 		this.setState({
 			currentImage: 0,
 			lightboxIsOpen: false,
 		});
 	}
 	gotoPrevious () {
+  	var currentImage = this.state.currentImage - 1;
+		addQuery({'image': currentImage});
 		this.setState({
-			currentImage: this.state.currentImage - 1,
+			currentImage: currentImage,
 		});
 	}
 	gotoNext () {
+  	var currentImage = this.state.currentImage + 1;
+		addQuery({'image': currentImage});
 		this.setState({
-			currentImage: this.state.currentImage + 1,
+			currentImage: currentImage,
 		});
 	}
 	gotoImage (index) {
+		addQuery({'image': index});
 		this.setState({
 			currentImage: index,
 		});
