@@ -21,7 +21,7 @@ class PageTemplate extends React.Component {
     return (
       <Layout>
         <NavDrawer active={this.state.drawerActive} onOverlayClick={ this.toggleDrawerActive } width="wide">
-          <GalleriesContainer />
+          {this.props.sidebar}
         </NavDrawer>
         <Panel>
           <AppBar title="Rich Trove Archive"  leftIcon='menu' onLeftIconClick={ this.toggleDrawerActive } >
@@ -32,7 +32,9 @@ class PageTemplate extends React.Component {
             </Navigation>
           </AppBar>
           <div style={{ flex: 1, overflowY: 'auto', padding: '1.8rem' }}>
-            <div {...this.props} />
+            <div>
+              {this.props.children}
+            </div>
           </div>
         </Panel>
         <Sidebar width={ 5 }>

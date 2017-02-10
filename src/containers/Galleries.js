@@ -1,7 +1,6 @@
 import React from 'react'
-var axios = require('axios');
+import GalleriesServiceInstance from 'services/galleries'
 import { GalleryList } from 'components'
-//import { axios } from 'axios'
 
 class GalleriesContainer extends React.Component {
   constructor(props) {
@@ -10,19 +9,7 @@ class GalleriesContainer extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/api/albums.json').then(function(response) {
-      var albums = [];
-      var seen = {};
-      for (var i in response.data) {
-        if (!seen[response.data[i].stub]) {
-          seen[response.data[i].stub] = true;
-          albums.push({
-            name: response.data[i].name,
-            date: new Date(response.data[i].date),
-            stub: response.data[i].stub.replace(/\//g,'--')
-          })
-        }
-      }
+    GalleriesServiceInstance.getGalleries().then(function(albums) {
       this.setState({galleries: albums})
     }.bind(this));
   }

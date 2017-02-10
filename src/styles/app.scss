@@ -41,3 +41,14 @@ body {
   top: -100%;
   bottom: -100%;
 }
+.sidebar-list {
+  margin: 0px;
+  padding: 0px;
+  a {
+    text-decoration: none;
+  }
+}
+.sidebar-list__item {
+  list-style: none;
+  padding: 20px;
+}

@@ -15,18 +15,20 @@ class GalleryDetail extends React.Component {
 		this.gotoImage = this.gotoImage.bind(this);
 		this.handleClickImage = this.handleClickImage.bind(this);
 		this.openLightbox = this.openLightbox.bind(this);
-		var image = props.gallery && props.gallery.images && props.gallery.images.length && props.query.image ? parseInt(props.query.image) : 0;
+		var image = this.galleryHasImages(props.gallery) && props.query.image ? parseInt(props.query.image) : 0;
 		this.state = {
       switch_view: props.query.switch_view ? true : false,
       lightboxIsOpen: image ? true : false,
   		currentImage: image,
     };
 	}
+	galleryHasImages(gallery) {
+  	return gallery && gallery.images && gallery.images.length;
+	}
 
   componentWillReceiveProps = (nextProps) => {
     // Load new data when the dataSource property changes.
-    if ((!this.props.gallery  || !this.props.gallery.images || !this.props.gallery.images.length)
-      && nextProps.gallery && nextProps.gallery.images.length && nextProps.query.image)  {
+    if (!this.galleryHasImages(this.props.gallery) && this.galleryHasImages(nextProps.gallery) && nextProps.query.image)  {
   		this.setState({
   			currentImage: parseInt(nextProps.query.image),
   			lightboxIsOpen: true,
