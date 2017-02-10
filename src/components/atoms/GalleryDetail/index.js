@@ -3,7 +3,6 @@ import ImageGallery from 'react-image-gallery';
 import Lightbox from 'react-images';
 import Switch from 'react-toolbox/lib/switch';
 
-
 class GalleryDetail extends React.Component {
   constructor (props) {
 		super(props);
@@ -93,13 +92,16 @@ class GalleryDetail extends React.Component {
       );
     }
     else {
+      var targetWidth=90;
       view = (
-        <span>
-          {images.map((image, i) =>
-            <a href={image.src} key={image.thumbnail} onClick={(e) => this.openLightbox(i, e)}>
-              <img src={image.thumbnail} />
-            </a>
-          )}
+        <div>
+            {images.map((image, i) =>
+              <div key={image.thumbnail} className="gallery-detail-grid__item">
+                <a href={image.src}  onClick={(e) => this.openLightbox(i, e)} className="gallery-detail-grid__link">
+                  <img src={image.thumbnail} className="gallery-detail-grid__image"/>
+                </a>
+              </div>
+            )}
           <Lightbox
             images={images}
             currentImage={this.state.currentImage}
@@ -110,7 +112,7 @@ class GalleryDetail extends React.Component {
   					onClickThumbnail={this.gotoImage}
   					onClose={this.closeLightbox}
           />
-        </span>
+        </div>
       );
     }
     return (

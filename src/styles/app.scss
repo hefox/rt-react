@@ -18,3 +18,26 @@ body {
     flex-grow: 2;
   }
 }
+
+.gallery-detail-grid__item {
+  float:left;
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  margin: 10px;
+  position: relative;
+}
+
+.gallery-detail-grid__link {
+}
+
+.gallery-detail-grid__image {
+  position: absolute;
+  margin: auto;
+  min-height: 100%;
+  min-width: 100%;
+  left: -100%;
+  right: -100%;
+  top: -100%;
+  bottom: -100%;
+}
