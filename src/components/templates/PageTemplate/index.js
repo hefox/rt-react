@@ -27,8 +27,8 @@ class PageTemplate extends React.Component {
           <AppBar title="Rich Trove Archive"  leftIcon='menu' onLeftIconClick={ this.toggleDrawerActive } >
 
             <Navigation type='horizontal'>
-              <Link href='/galleries' label='Galleries' icon='grid_on' />
-              <Link href='http://www.richtrove.com/' active label='Source' icon='web' />
+              <Link to='galleries' label='Galleries' icon='grid_on' />
+              <Link href='http://www.richtrove.com/' active label='Richtrove.com' icon='web' />
             </Navigation>
           </AppBar>
           <div style={{ flex: 1, overflowY: 'auto', padding: '1.8rem' }}>

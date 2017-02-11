@@ -84,25 +84,8 @@ class GalleryDetail extends React.Component {
 
   render() {
     var that = this;
-    var images = [];
+    var images = this.galleryHasImages(this.props.gallery) ? this.props.gallery.images : [];
     var view;
-    if (this.props.gallery.images) {
-      var base = "http://richtrove.com/" + this.props.gallery.stub.replace(/--/, '/') + '/';
-      for (var key in this.props.gallery.images) {
-        if (this.state.switch_view) {
-          images.push({
-            thumbnail: base + this.props.gallery.images[key],
-            original: base + this.props.gallery.images[key].replace('thumbnails/', 'images/'),
-          });
-        }
-        else {
-          images.push({
-            thumbnail: base + this.props.gallery.images[key],
-            src: base + this.props.gallery.images[key].replace('thumbnails/', 'images/'),
-          });
-        }
-      }
-    }
     if (this.state.switch_view) {
       view = (
         <ImageGallery
@@ -114,6 +97,9 @@ class GalleryDetail extends React.Component {
       );
     }
     else {
+      for (var key in images) {
+        images[key]['original'] = images[key]['src'];
+      }
       var targetWidth=90;
       view = (
         <div>

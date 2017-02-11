@@ -16,7 +16,7 @@ class GalleriesService  {
               albums.push({
                 name: response.data[i].name,
                 date: new Date(response.data[i].date),
-                stub: response.data[i].stub.replace(/\//g,'--')
+                stub: response.data[i].stub.replace(/ /g,'-').replace(/\//g,'--')
               })
             }
           }
@@ -31,6 +31,14 @@ class GalleriesService  {
       this.loadedAlbums[stub] = new Promise(function(resolve, reject) {
         axios.get('/api/albums/' + stub + '.json').then(function(response) {
           response.data.date = new Date(response.data.date);
+          var base = "http://richtrove.com/" + response.data.href + '/';
+          for (var i in response.data.images) {
+            var image = response.data.images[i];
+            response.data.images[i] = {
+              src: base + image.replace('thumbnails/', 'images/'),
+              thumbnail: base + image,
+            }
+          }
           resolve(response.data);
         })
       });
