@@ -3,6 +3,8 @@ import { AppBar, Sidebar } from 'react-toolbox';
 import { Layout, NavDrawer, Panel } from 'react-toolbox';
 import { Link, Navigation, IconButton } from 'react-toolbox';
 import GalleriesContainer from 'containers/Galleries'
+import { goToLocation } from 'utils/query';
+
 
 
 class PageTemplate extends React.Component {
@@ -16,6 +18,10 @@ class PageTemplate extends React.Component {
   toggleDrawerActive = () => {
     this.setState({ drawerActive: !this.state.drawerActive });
   };
+  handleClickAsLink(path, event) {
+    event.preventDefault();
+    goToLocation(path);
+  }
 
   render() {
     return (
@@ -27,8 +33,9 @@ class PageTemplate extends React.Component {
           <AppBar title="Rich Trove Archive"  leftIcon='menu' onLeftIconClick={ this.toggleDrawerActive } >
 
             <Navigation type='horizontal'>
-              <Link to='galleries' label='Galleries' icon='grid_on' />
-              <Link href='http://www.richtrove.com/' active label='Richtrove.com' icon='web' />
+              <Link label='Galleries' icon='grid_on' onClick={this.handleClickAsLink.bind(this, '/galleries')} />
+              <Link href='http://www.richtrove.com/' active label='Richtrove.com' icon='web'
+                 />
             </Navigation>
           </AppBar>
           <div style={{ flex: 1, overflowY: 'auto', padding: '1.8rem' }}>

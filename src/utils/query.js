@@ -17,3 +17,10 @@ export const removeQuery = (...queryNames) => {
     queryNames.forEach(q => delete location.query[q]);
     browserHistory.push(location);
 };
+
+/**
+ * @param {...String} queryNames
+ */
+export const goToLocation = (location) => {
+  browserHistory.push(location);
+};
