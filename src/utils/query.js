@@ -14,8 +14,8 @@ export const addQuery = (query) => {
  */
 export const removeQuery = (...queryNames) => {
     const location = Object.assign({}, browserHistory.getCurrentLocation());
-    window.rtHistory.forEach(q => delete location.query[q]);
-    browserHistory.push(location);
+    queryNames.forEach(q => delete location.query[q]);
+    window.rtHistory.push(location);
 };
 
 /**
