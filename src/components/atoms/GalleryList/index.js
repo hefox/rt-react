@@ -1,3 +1,7 @@
+/**
+ * Display a list of galleries filtered by year/month/keyword.
+ */
+
 import React from 'react'
 import { Link } from 'react-router'
 import { Dropdown, Input } from 'react-toolbox';
@@ -132,26 +136,33 @@ class GalleryList extends React.Component {
   render() {
     var that = this;
     var headers = {};
+    // Filter by year
+    var yearDropdown = (<Dropdown
+      auto
+      onChange={that.handleYearChange}
+      source={that.state.years}
+      value={that.state.year}
+      className="gallery-list__form-item allery-list__form-item--years"
+    />);
+    // Filter by month
+    var monthDropdown = parseInt(this.state.year) > 0 && this.state.months.length > 2 ? (
+      <Dropdown
+        auto
+        onChange={that.handleMonthChange}
+        source={that.state.months}
+        value={that.state.month}
+        className="gallery-list__form-item allery-list__form-item--months"
+      />
+    ) : '';
+    // Search titles
+    var searchInput = (<Input type='text' value={this.state.search} label='Search' hint='Search Albums' onChange={this.handleSearchChange} icon='search'  className="gallery-list__form-item allery-list__form-item--search"/>);
+
     return (
       <section >
         <div className="gallery-list__form">
-          <Dropdown
-            auto
-            onChange={that.handleYearChange}
-            source={that.state.years}
-            value={that.state.year}
-            className="gallery-list__form-item allery-list__form-item--years"
-          />
-          {parseInt(this.state.year) > 0 && this.state.months.length > 2 &&
-            <Dropdown
-              auto
-              onChange={that.handleMonthChange}
-              source={that.state.months}
-              value={that.state.month}
-              className="gallery-list__form-item allery-list__form-item--months"
-            />
-          }
-          <Input type='text' value={this.state.search} label='Search' hint='Search Albums' onChange={this.handleSearchChange} icon='search'  className="gallery-list__form-item allery-list__form-item--search"/>
+          {yearDropdown}
+          {monthDropdown}
+          {searchInput}
         </div>
         <List selectable ripple>
           <ListSubHeader caption={that.state.year} />

@@ -1,3 +1,8 @@
+/**
+ * Return data about galleries, current stored in static diretory.
+ */
+
+
 var axios = require('axios');
 var currentBaseName = '/';
 
@@ -5,7 +10,9 @@ var currentBaseName = '/';
 class GalleriesService  {
   allAlbums;
   loadedAlbums = {}
+  // Retrieve all the albums.
   getGalleries() {
+    // Cache so only retrieved once.
     if (!this.allAlbums) {
       this.allAlbums = new Promise(function(resolve, reject) {
         axios.get(currentBaseName + 'api/albums.json').then(function(response) {
@@ -27,6 +34,7 @@ class GalleriesService  {
     }
     return this.allAlbums;
   }
+  // Retrieve a specific gallery identified by distinct stub.
   getGallery(stub) {
     if (!this.loadedAlbums[stub]) {
       this.loadedAlbums[stub] = new Promise(function(resolve, reject) {

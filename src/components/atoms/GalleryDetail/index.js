@@ -1,3 +1,7 @@
+/**
+ * Display a gallery.
+ */
+
 import React from 'react';
 import ImageGallery from 'react-image-gallery';
 import Lightbox from 'react-images';
@@ -83,6 +87,7 @@ class GalleryDetail extends React.Component {
 	}
 
   render() {
+    // @todo Seperate into smaller components.
     var that = this;
     var images = this.galleryHasImages(this.props.gallery) ? this.props.gallery.images : [];
     var view;
@@ -101,6 +106,7 @@ class GalleryDetail extends React.Component {
         images[key]['original'] = images[key]['src'];
       }
       var targetWidth=90;
+      // Make this it's own component.
       view = (
         <div>
             {images.map((image, i) =>

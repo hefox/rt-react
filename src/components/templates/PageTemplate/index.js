@@ -1,3 +1,8 @@
+/**
+ * Wrapper around pages displaying an optional sidebar.
+ */
+
+
 import React from 'react'
 import { AppBar, Sidebar } from 'react-toolbox';
 import { Layout, NavDrawer, Panel } from 'react-toolbox';
@@ -27,13 +32,13 @@ class PageTemplate extends React.Component {
     return (
       <Layout>
         <NavDrawer active={this.state.drawerActive} onOverlayClick={ this.toggleDrawerActive } width="wide">
-          {this.props.sidebar}
+          {this.props.sidebar || <Link label='Galleries' icon='grid_on' onClick={this.handleClickAsLink.bind(this, '/galleries')} /> }
         </NavDrawer>
         <Panel>
           <AppBar title="Rich Trove Archive"  leftIcon='menu' onLeftIconClick={ this.toggleDrawerActive } >
 
             <Navigation type='horizontal'>
-              <Link label='Galleries' icon='grid_on' onClick={this.handleClickAsLink.bind(this, '/galleries')} />
+              <Link href="/galleries" label='Galleries' icon='grid_on' onClick={this.handleClickAsLink.bind(this, '/galleries')} />
               <Link href='http://www.richtrove.com/' active label='Richtrove.com' icon='web'
                  />
             </Navigation>
@@ -44,12 +49,6 @@ class PageTemplate extends React.Component {
             </div>
           </div>
         </Panel>
-        <Sidebar width={ 5 }>
-            <div><IconButton icon='close' onClick={ this.toggleDrawerActive }/></div>
-            <div style={{ flex: 1 }}>
-                <p>Supplemental content goes here.</p>
-            </div>
-        </Sidebar>
       </Layout>
     );
   }

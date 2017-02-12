@@ -1,3 +1,9 @@
+/**
+ * Display a list of galleries.
+ *
+ * @todo Rename component, doesn't need to be used byYear.
+ */
+
 import React from 'react'
 import { Link } from 'react-router'
 import { Dropdown, Input } from 'react-toolbox';
