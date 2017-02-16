@@ -1,6 +1,7 @@
-import React from 'react'
-import GalleriesServiceInstance from 'services/galleries'
-import { GalleryList } from 'components'
+import React from 'react';
+import GalleriesServiceInstance from 'services/galleries';
+import { GalleryList } from 'components';
+import { addQuery, removeQuery } from 'utils/query';
 
 class GalleriesContainer extends React.Component {
   constructor(props) {
@@ -15,6 +16,12 @@ class GalleriesContainer extends React.Component {
 
   getGalleries(year) {
     GalleriesServiceInstance.getGalleries(year).then(function(albums) {
+      if (year != new Date().getFullYear()) {
+        addQuery({year: year})
+      }
+      else {
+        removeQuery('year');
+      }
       this.setState({
         year: year,
         galleries: albums

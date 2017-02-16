@@ -9,7 +9,7 @@ import { List, ListItem, ListSubHeader } from 'react-toolbox/lib/list';
 import { addQuery, removeQuery } from 'utils/query';
 
 class GalleryList extends React.Component {
-  galleryKey = '_id';
+  galleryKey = 'id';
   constructor(props) {
     super(props);
     // Inherit the current query params.
@@ -23,7 +23,9 @@ class GalleryList extends React.Component {
   // Filter galleries by searched properties
   getStatefulGalleries(props, newState, updateQuery) {
     // newState takes priority, then this.state is checked, then default.
-    var month = props.year ? (newState && newState.hasOwnProperty('month') ? newState.month :
+    console.log(props.year, newState);
+    var allowMonth = props.year && (!this.state || !this.state.currentYear || props.year == this.state.currentYear);
+    var month = allowMonth ? (newState && newState.hasOwnProperty('month') ? newState.month :
       (this.state && this.state.month ? this.state.month : 0)) : 0;
     var search = newState && newState.hasOwnProperty('search') ? newState.search :
       (this.state && this.state.search ? this.state.search : '');
@@ -72,6 +74,7 @@ class GalleryList extends React.Component {
       search: search,
       month: parseInt(month),
       months: months,
+      currentYear: props.year,
     };
   }
   printMonthName (number) {

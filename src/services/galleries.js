@@ -30,16 +30,8 @@ class GalleriesService  {
   getGallery(stub) {
     if (!this.loadedAlbums[stub]) {
       this.loadedAlbums[stub] = new Promise(function(resolve, reject) {
-        axios.get(currentBaseName + 'api/galleries/' + stub + '.json').then(function(response) {
+        axios.get(currentBaseName + 'api/galleries/stub/' + stub).then(function(response) {
           response.data.date = new Date(response.data.date);
-          var base = "http://richtrove.com/" + response.data.href + '/';
-          for (var i in response.data.images) {
-            var image = response.data.images[i];
-            response.data.images[i] = {
-              src: base + image.replace('thumbnails/', 'images/'),
-              thumbnail: base + image,
-            }
-          }
           resolve(response.data);
         })
       });
