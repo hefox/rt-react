@@ -19,7 +19,7 @@ class GalleriesByYear extends React.Component {
         <ul className="sidebar-list">
           {that.props.galleries.map((gallery) =>
             <li key={gallery.stub} className="sidebar-list__item">
-              <Link to={"/galleries/" + gallery.stub} >{gallery.name}</Link>
+              <Link to={"/galleries/" + gallery.stub} >{gallery.title}</Link>
             </li>
           )}
         </ul>

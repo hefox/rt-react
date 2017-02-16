@@ -4,41 +4,34 @@
 
 
 var axios = require('axios');
-var currentBaseName = '/';
+var currentBaseName = 'http://localhost:3030/';
 
 // Fetch galleries information
 class GalleriesService  {
-  allAlbums;
+  allAlbums = {};
   loadedAlbums = {}
   // Retrieve all the albums.
-  getGalleries() {
+  getGalleries(year) {
     // Cache so only retrieved once.
-    if (!this.allAlbums) {
-      this.allAlbums = new Promise(function(resolve, reject) {
-        axios.get(currentBaseName + 'api/albums.json').then(function(response) {
-          var albums = [];
-          var seen = {};
-          for (var i in response.data) {
-            if (!seen[response.data[i].stub]) {
-              seen[response.data[i].stub] = true;
-              albums.push({
-                name: response.data[i].name,
-                date: new Date(response.data[i].date),
-                stub: response.data[i].stub.replace(/ /g,'-').replace(/\//g,'--')
-              })
-            }
+    if (!this.allAlbums[year]) {
+      this.allAlbums[year] = new Promise(function(resolve, reject) {
+        var query = year ? '?year=' + year : '';
+        axios.get(currentBaseName + 'api/galleries' + query).then(function(response) {
+          for (var key in response.data.galleries) {
+            response.data.galleries[key].date = response.data.galleries[key] ? new Date(response.data.galleries[key].date) : null;
           }
-          resolve(albums);
+          console.log(response.data.galleries);
+          resolve(response.data.galleries);
         });
       });
     }
-    return this.allAlbums;
+    return this.allAlbums[year];
   }
   // Retrieve a specific gallery identified by distinct stub.
   getGallery(stub) {
     if (!this.loadedAlbums[stub]) {
       this.loadedAlbums[stub] = new Promise(function(resolve, reject) {
-        axios.get(currentBaseName + 'api/albums/' + stub + '.json').then(function(response) {
+        axios.get(currentBaseName + 'api/galleries/' + stub + '.json').then(function(response) {
           response.data.date = new Date(response.data.date);
           var base = "http://richtrove.com/" + response.data.href + '/';
           for (var i in response.data.images) {

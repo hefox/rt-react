@@ -131,7 +131,7 @@ class GalleryDetail extends React.Component {
     }
     return (
       <section>
-        <h1>{that.props.gallery.name}</h1>
+        <h1>{that.props.gallery.title}</h1>
         <Switch
           checked={this.state.switch_view}
           label="Carousel"

@@ -5,17 +5,32 @@ import { GalleryList } from 'components'
 class GalleriesContainer extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {galleries: []};
+    var year = props.query.year ? props.query.year : new Date().getFullYear();
+    this.state = {galleries: [], year: year};
   }
 
   componentDidMount() {
-    GalleriesServiceInstance.getGalleries().then(function(albums) {
-      this.setState({galleries: albums})
+    this.getGalleries(this.state.year);
+  }
+
+  getGalleries(year) {
+    console.log('get galleries', year);
+    GalleriesServiceInstance.getGalleries(year).then(function(albums) {
+      console.log('albums', albums);
+      this.setState({
+        year: year,
+        galleries: albums
+      })
     }.bind(this));
   }
 
   render() {
-    return (<GalleryList galleries={this.state.galleries} query={this.props.query} />);
+    return (<GalleryList
+      galleries={this.state.galleries}
+      query={this.props.query}
+      year={this.state.year}
+      updateGalleries={this.getGalleries.bind(this)}
+      />);
   }
 }
 
