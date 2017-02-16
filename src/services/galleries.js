@@ -20,7 +20,6 @@ class GalleriesService  {
           for (var key in response.data.galleries) {
             response.data.galleries[key].date = response.data.galleries[key] ? new Date(response.data.galleries[key].date) : null;
           }
-          console.log(response.data.galleries);
           resolve(response.data.galleries);
         });
       });

@@ -14,9 +14,7 @@ class GalleriesContainer extends React.Component {
   }
 
   getGalleries(year) {
-    console.log('get galleries', year);
     GalleriesServiceInstance.getGalleries(year).then(function(albums) {
-      console.log('albums', albums);
       this.setState({
         year: year,
         galleries: albums
