@@ -8,7 +8,6 @@ class App extends React.Component {
     this.state = {
       is18: localStorage.getItem('is18') == 'true',
     };
-    console.log(this.state);
   }
 
   confirmAge = () => {

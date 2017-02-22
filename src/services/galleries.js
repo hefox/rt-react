@@ -9,7 +9,8 @@ var currentBaseName = 'http://localhost:3030/';
 // Fetch galleries information
 class GalleriesService  {
   allAlbums = {};
-  loadedAlbums = {}
+  loadedAlbums = {};
+  categories = {};
   // Retrieve all the albums.
   getGalleries(year) {
     // Cache so only retrieved once.
@@ -37,6 +38,17 @@ class GalleriesService  {
       });
     }
     return this.loadedAlbums[stub];
+  }
+  // Retrieve tags.
+  getCategories(label) {
+    if (!this.categories[label]) {
+      this.categories[label] = new Promise(function(resolve, reject) {
+        axios.get(currentBaseName + 'api/galleries/' + label).then(function(response) {
+          resolve(response.data);
+        })
+      });
+    }
+    return this.categories[label];
   }
 }
 

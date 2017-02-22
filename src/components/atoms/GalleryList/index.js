@@ -6,6 +6,7 @@ import React from 'react'
 import { Link } from 'react-router'
 import { Dropdown, Input } from 'react-toolbox';
 import { List, ListItem, ListSubHeader } from 'react-toolbox/lib/list';
+import CategoryFilter from 'containers/CategoryFilter';
 import { addQuery, removeQuery } from 'utils/query';
 
 class GalleryList extends React.Component {
@@ -23,12 +24,15 @@ class GalleryList extends React.Component {
   // Filter galleries by searched properties
   getStatefulGalleries(props, newState, updateQuery) {
     // newState takes priority, then this.state is checked, then default.
-    console.log(props.year, newState);
     var allowMonth = props.year && (!this.state || !this.state.currentYear || props.year == this.state.currentYear);
     var month = allowMonth ? (newState && newState.hasOwnProperty('month') ? newState.month :
       (this.state && this.state.month ? this.state.month : 0)) : 0;
     var search = newState && newState.hasOwnProperty('search') ? newState.search :
       (this.state && this.state.search ? this.state.search : '');
+    var venues = newState && newState.hasOwnProperty('venues') ? newState.venues :
+      (this.state && this.state.venues ? this.state.venues : '');
+    var tags = newState && newState.hasOwnProperty('tags') ? newState.tags :
+      (this.state && this.state.tags ? this.state.tags : '');
     var searchLower = search ? search.toLowerCase() : null;
 
 
@@ -37,7 +41,10 @@ class GalleryList extends React.Component {
     for (var i in props.galleries) {
       var galleryMonth = props.galleries[i].date.getMonth();
       // Filter by search if provided.
-      var matchesSearch = (!searchLower || props.galleries[i].name.toLowerCase().indexOf(searchLower) > -1);
+      var matchesSearch =
+        (!searchLower || props.galleries[i].name.toLowerCase().indexOf(searchLower) > -1)
+        && (!venues || props.galleries[i].venues.indexOf(venues) > -1)
+        && (!tags || props.galleries[i].tags.indexOf(tags) > -1);
       if ((!month || galleryMonth+1 == month) && matchesSearch) {
         albums.push(props.galleries[i]);
       }
@@ -75,6 +82,8 @@ class GalleryList extends React.Component {
       month: parseInt(month),
       months: months,
       currentYear: props.year,
+      tags: tags,
+      venues: venues,
     };
   }
   printMonthName (number) {
@@ -101,6 +110,12 @@ class GalleryList extends React.Component {
 
   handleMonthChange = (month) => {
     this.setState(this.getStatefulGalleries(this.props, {month: month}, true));
+  };
+
+  handleChange = (key, value) => {
+    var stateChange = {};
+    stateChange[key] = value;
+    this.setState(this.getStatefulGalleries(this.props, stateChange, true));
   };
 
 
@@ -142,7 +157,7 @@ class GalleryList extends React.Component {
       onChange={that.handleYearChange}
       source={years}
       value={year}
-      className="gallery-list__form-item allery-list__form-item--years"
+      className="gallery-list__form-item gallery-list__form-item--years"
     />);
 
     // Filter by month
@@ -164,6 +179,8 @@ class GalleryList extends React.Component {
           {yearDropdown}
           {monthDropdown}
           {searchInput}
+          <CategoryFilter label="tags" handleChange={this.handleChange.bind(this, 'tags')} value={this.state.tags}></CategoryFilter>
+          <CategoryFilter label="venues" handleChange={this.handleChange.bind(this, 'venues')} value={this.state.venues}></CategoryFilter>
         </div>
         <List selectable ripple>
           <ListSubHeader caption={year} />
